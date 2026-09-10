@@ -1,0 +1,90 @@
+id: sp.sds1
+name: sds1
+title: Evidencia poberateľov dôchodkov so SDS (II. Pilier)(SDS1)
+version: 1.0.0
+
+description: |
+  Evidencia poberateľov dôchodkov z druhého piliera starobného dôchodkového sporenia (tzv. II. pilier) je systém zaznamenávania a sledovania údajov o jednotlivých poberateľoch dôchodkov, ktorí si v rámci tohto piliera vytvorili svoj dôchodkový účet.
+  
+  V II. pilieri sa jedná o dobrovoľný systém, kde jednotlivci dobrovoľne prispievajú časť svojho príjmu do osobného dôchodkového konta, ktorého cieľom je zhromažďovať finančné prostriedky pre budúce dôchodkové dávky. Tieto finančné prostriedky sú potom spravované dôchodkovými správcami, ktorí ich investujú do rôznych finančných nástrojov s cieľom dosiahnuť zhodnotenie. 
+  
+  Evidencia poberateľov dôchodkov z druhého piliera zaznamenáva nasledujúce údaje:
+
+  1. **Identifikačné údaje**: Meno, priezvisko, rodné číslo alebo iný identifikačný údaj, ktorý jednoznačne identifikuje poberateľa dôchodku.
+  2. **Údaje o dôchodkovom účte**: Informácie o dôchodkovom účte, vrátane sumy príspevkov zaplatených poberateľom, zhodnotenia účtu, pripisovania a odpisovania prostriedkov a iných finančných transakcií.  
+  3. **Kontaktné údaje**: Adresa, telefónne číslo, e-mailová adresa a ďalšie údaje, ktoré slúžia na komunikáciu so poberateľom dôchodku.
+  4. **História príspevkov a výplat**: Informácie o príspevkoch zaplatených poberateľom do dôchodkového účtu, ako aj o výplatoch dôchodkových dávok.
+
+  Evidencia poberateľov dôchodkov z druhého piliera je dôležitým nástrojom na sledovanie a správu dôchodkových kont a zaisťuje transparentnosť a kontrolu nad vývojom finančných prostriedkov v rámci tohto piliera. Správcovia dôchodkových fondov a príslušné inštitúcie sú zodpovedné za správu a aktualizáciu tejto evidencie.
+
+annotations:
+  sk.gov.dataManagement.source.name: Sociálna poisťovňa
+  sk.gov.dataManagement.intendedPerson: Physical person, Legal person
+  sk.gov.dataManagement.isvs.name: CIPS - Centrálny informačný ponukový systém
+  sk.gov.dataManagement.isvs.code: isvs_8140
+  sk.gov.dataManagement.csru.availability: "YES"
+  sk.gov.dataManagement.format: XML
+  sk.gov.dataManagement.integration.availability: "YES"
+  sk.gov.dataManagement.integration.name: Evidencia poberateľov dôchodkov so starobného dôchodkového sporenia (II. Pilier) - Poskytnutie údajov o výplate dôchodkovej dávky zo SDS so sumou
+  sk.gov.dataManagement.legislation: Zákon č. 43/2004 Z. z. o starobnom dôchodkovom sporení a o zmene a doplnení niektorých zákonov
+  sk.gov.dataManagement.edoc.availability: "NO"
+  sk.gov.dataManagement.ontology.availability: "YES"
+  sk.gov.dataManagement.usecase:
+  sk.gov.dataManagement.quality.level: "1"
+
+
+default_range: string
+imports:
+  - linkml:types
+  - sp
+
+
+## Kardinalita sa vytvorí pri importe kombináciou vlastností "required" a "mutlivalued" nasledovne:
+## 1..* - slot je required a multivalued
+## 1..1 - slot je required ale nie multivalued
+## 0..* - slot nie je required ale je multivalued
+## 0..1 - slot nie je required a nie je multivalued
+##
+## ak nie je uvedené, default je false (nie je)
+
+
+classes:
+  SDS1:
+    description: Sociálna poisťovňa na Slovensku poskytuje rôzne dávky, vrátane nemocenských a dôchodkových dávok.
+    tree_root: true
+
+  ResultType:
+    description: Zložený dátový typ ResultType
+    attributes:
+      ConfirmationDate:
+        description: Dátum, ku ktorému bol zistený stav poberania dôchodkových dávok
+        range: date
+        required: true
+      PensionBenefitsInfo:
+        description: Informácie o vyplácaní dôchodkových dávok - akt stav vyplácania
+        range: PensionBenefitsInfo
+      AdditionalComments:
+        description: Doplňujúce poznámky k potvrdeniu o vyplácaných dôchodkvých dávkach
+        range: AdditionalComments
+        multivalued: true
+
+  PensionBenefitsInfo:
+    description: Informácie o vyplácaní dôchodkových dávok - akt stav vyplácania
+    attributes:
+      PensionBenefit:
+        description: zložený dátový typ s opakovaním - PensionBenefit
+        range: PensionBenefit
+        multivalued: true
+        
+  PensionBenefitType:
+    description: zložený dátový typ PensionBenefitType
+    attributes:
+      Name:
+        description: Doživotný dôchodok, Dočasný dôchodok, Programový výber
+        range: string
+        required: true
+      Value:
+        description: "enumerácia - hodnoty: áno, nie"
+        range: string
+        required: true
+

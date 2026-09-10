@@ -1,0 +1,4 @@
+source:
+  type: file
+  config:
+    filename: ./mce/bootstrap_mce.json

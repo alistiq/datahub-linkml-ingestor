@@ -1,0 +1,202 @@
+id: sp
+name: SocialnaPoistovna
+title: Štandardné triedy a vlastnosti datasetov Sociálnej poisťovne
+version: 1.0.0
+
+description: Triedy a vlastnosti používané skrz datasety DP3 a DP4 Sociálnej poisťovne
+
+default_range: string
+imports:
+  - linkml:types
+
+
+classes:
+  PensionBenefitsInfo: 
+    description: Informácie o vyplácaní dôchodkových dávok - akt stav vyplácania
+    mixins:
+      - HasMinAmounts
+    attributes:
+      yyyymmFrom:
+        description: Rok a mesiac zač. obdobia potvrdenia YYYYMM
+        range: string # YearMonth
+        pattern: "^(\\d{4})(\\d{2})$"
+        keywords:
+          - attribute
+      yyyymmTo:
+        description: Rok a mesiac konca obdobia potvrdenia YYYYMM
+        range: string  # YearMonth
+        pattern: "^(\\d{4})(\\d{2})$"
+        keywords:
+          - attribute
+      totalAmountI:
+        description: Úhrnná suma invalidného (I) dôchodku v EUR
+        range: float
+        keywords:
+          - attribute
+      totalAmountS:
+        description: Úhrnná suma starobného (S) dôchodku v EUR
+        range: float
+        keywords:
+          - attribute
+      totalAmountPS:
+        description: Úhrnná suma predčasného starobného (PS) dôchodku v EUR
+        range: float
+        keywords:
+          - attribute
+      totalAmountV : 
+        description: Úhrnná suma vdovského (V) dôchodku v EUR
+        range: float
+        keywords:
+          - attribute
+      totalAmountVd : 
+        description: Úhrnná suma vdoveckého (Vd) dôchodku v EUR
+        range: float
+        keywords:
+          - attribute   
+      totalAmountD : 
+        description: Úhrnná suma sirotského (D) dôchodku v EUR
+        range: float
+        keywords:
+          - attribute 
+      totalAmountVR : 
+        description: Úhrnná suma vyrovnávacieho príplatku (VR) v EUR
+        range: float
+        keywords:
+          - attribute 
+      totalAmountBZ : 
+        description: Úhrnná suma zvýšenia pre bezvládnosť dôchodcu (BZ) v EUR
+        range: float
+        keywords:
+          - attribute 
+      totalAmountK : 
+        description: Úhrnná suma úrazového dôchodku (K) v EUR
+        range: float
+        keywords:
+          - attribute 
+      totalAmountM : 
+        description: Úhrnná suma dôchodku manželky (M) v EUR
+        range: float
+        keywords:
+          - attribute 
+      totalAmountP : 
+        description: Úhrnná suma sociálneho dôchodku (P) v EUR
+        range: float
+        keywords:
+            - attribute
+      totalAmountVr : 
+        description: Úhrnná suma dôchodku za výsluhu rokov (Vr) v EUR
+        range: float
+        keywords:
+          - attribute
+
+      PensionBenefitsItem:
+        description: rozpis dôchodkov po obdobiach
+        range: PensionBenefitsItem
+        multivalued: true
+        required: true
+
+  PensionBenefitsItem:  
+    description: zložený dátový typ PensionBenefitsItem 
+    mixins:
+      - HasMinAmounts
+    attributes:
+      dateFrom:
+        description: Dátum od (ak ide o obdobie doplatku)
+        range: date 
+        keywords:
+          - attribute
+      dateTo:
+        description: Dátum do (ak ide o obdobie doplatku)
+        range: date 
+        keywords:
+          - attribute
+      yyyymm:
+        description: Rok a mesiac výplaty dôchodkovej dávky YYYYMM (ak ide o celomesačné obdobie)
+        range: string # YearMonth
+        pattern: "^(\\d{4})(\\d{2})$"
+        keywords:
+          - attribute
+      amountI:
+        description: Suma invalidného (I) dôchodku v EUR
+        range: float 
+        keywords:
+          - attribute
+      amountS:
+        description: Suma starobného (S) dôchodku v EUR
+        range: float
+        keywords:
+          - attribute
+      amountPS:
+        description: Suma predčasného starobného (PS) dôchodku v EUR
+        range: float
+        keywords:
+          - attribute
+      amountV:
+        description: Suma vdovského (V) dôchodku v EUR
+        range: float
+        keywords:
+          - attribute
+      amountVd:
+        description: Suma vdoveckého (Vd) dôchodku v EUR
+        range: float
+        keywords:
+          - attribute
+      amountD:
+        description: Suma sirotského (D) dôchodku v EUR
+        range: float
+        keywords:
+          - attribute  
+      amountVR:
+        description: Suma vyrovnávacieho príplatku (VR) v EUR
+        range: float
+        keywords:
+          - attribute  
+      amountBZ:
+        description: Suma zvýšenia pre bezvládnosť dôchodcu (BZ) v EUR
+        range: float
+        keywords:
+          - attribute  
+      amountK:
+        description: Suma úrazového dôchodku (K) v EUR
+        range: float
+        keywords:
+          - attribute
+      amountM:
+        description: Suma dôchodku manželky (M) v EUR
+        range: float
+        keywords:
+          - attribute
+      amountP:
+        description: Suma sociálneho dôchodku (P) v EUR
+        range: float
+        keywords:
+          - attribute
+      amountVr:
+        description: Suma dôchodku za výsluhu rokov (Vr) v EUR
+        range: float
+        keywords:
+          - attribute
+
+
+  ## Physical person ##
+
+  PersonNameType: 
+    description: Zložený dátový typ údajov o mene osoby
+    attributes:
+      GivenName:
+        description: Nededená časť mena osoby, zväčša získané pri narodení
+        range: string
+        multivalued: true
+        required: true
+      FamilyName:
+        description: Dedená časť mena osoby, označované tiež ako priezvisko
+        range: string
+        multivalued: true 
+        required: true
+      Affix:
+        description: Dodatok k menu, spravidla obsahuje tituly pred a za menom
+        range: AffixType
+        multivalued: true
+      FormattedName:
+        description: Naformátované celé meno osoby tak, ako by sa malo zobrazovať používateľom
+        range: string

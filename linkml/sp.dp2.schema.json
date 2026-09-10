@@ -1,0 +1,432 @@
+{
+    "$defs": {
+        "AdditionalComments": {
+            "additionalProperties": false,
+            "description": "Dopl\u0148uj\u00face pozn\u00e1mky k potvrdeniu o vypl\u00e1can\u00fdch d\u00f4chodkv\u00fdch d\u00e1vkach",
+            "properties": {
+                "Comment": {
+                    "description": "Pozn\u00e1mka (riadok / odsek)",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "AdditionalComments",
+            "type": "object"
+        },
+        "AffixType": {
+            "additionalProperties": false,
+            "description": "Dodatok k menu, spravidla obsahuje tituly pred a za menom",
+            "properties": {
+                "Codelist": {
+                    "$ref": "#/$defs/Codelist",
+                    "description": "zlo\u017een\u00fd d\u00e1tov\u00fd typ \u010c\u00edseln\u00edkov\u00e1 hodnota"
+                },
+                "NonCodelistData": {
+                    "description": "ne\u010d\u00edseln\u00edkov\u00e1 hodnota, len v pr\u00edpade, ak nie je vyplnen\u00e1 \u010d\u00edseln\u00edkov\u00e1 hodnota",
+                    "type": "string"
+                },
+                "position": {
+                    "description": "poz\u00edcia vr\u00e1mci ostatn\u00fdch dodatkov",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "typ dodatku, pred alebo za menom",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "Codelist"
+            ],
+            "title": "AffixType",
+            "type": "object"
+        },
+        "ApplicantType": {
+            "additionalProperties": false,
+            "description": "Zlo\u017een\u00fd d\u00e1tov\u00fd prvok ApplicantType",
+            "properties": {
+                "PersonData": {
+                    "$ref": "#/$defs/PersonDataType",
+                    "description": "Osobn\u00e9 \u00fadaje \u017eiadate\u013ea"
+                }
+            },
+            "title": "ApplicantType",
+            "type": "object"
+        },
+        "BirthType": {
+            "additionalProperties": false,
+            "description": "Zlo\u017een\u00fd d\u00e1tovy typ \u00fadajov o naroden\u00e9 osoby",
+            "properties": {
+                "DateOfBirth": {
+                    "description": "D\u00e1tum narodenia",
+                    "format": "date",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "DateOfBirth"
+            ],
+            "title": "BirthType",
+            "type": "object"
+        },
+        "Codelist": {
+            "additionalProperties": false,
+            "description": "Zlo\u017een\u00fd d\u00e1tov\u00fd typ pre hodnoty z \u010d\u00edseln\u00edka",
+            "properties": {
+                "CodelistCode": {
+                    "description": "K\u00f3dov\u00e9 ozna\u010denie \u010d\u00edseln\u00edka",
+                    "type": "string"
+                },
+                "CodelistItem": {
+                    "$ref": "#/$defs/CodelistItem",
+                    "description": "Polo\u017eka z \u010d\u00edseln\u00edka"
+                }
+            },
+            "required": [
+                "CodelistCode",
+                "CodelistItem"
+            ],
+            "title": "Codelist",
+            "type": "object"
+        },
+        "CodelistItem": {
+            "additionalProperties": false,
+            "description": "Zlo\u017een\u00fd d\u00e1tov\u00fd typ pre konkr\u00e9tnu hodnotu z \u010d\u00edseln\u00edka",
+            "properties": {
+                "ItemCode": {
+                    "description": "k\u00f3d polo\u017eky",
+                    "type": "string"
+                },
+                "ItemName": {
+                    "description": "n\u00e1zov polo\u017eky",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "ItemCode",
+                "ItemName"
+            ],
+            "title": "CodelistItem",
+            "type": "object"
+        },
+        "CorporateBodyType": {
+            "additionalProperties": false,
+            "description": "Zlo\u017een\u00fd d\u00e1tov\u00fd typ \u00fadajov o pr\u00e1vnickej osobe",
+            "properties": {
+                "CorporateBodyFullName": {
+                    "description": "Pln\u00fd n\u00e1zov pr\u00e1vnickej osoby",
+                    "type": "string"
+                }
+            },
+            "title": "CorporateBodyType",
+            "type": "object"
+        },
+        "DP2": {
+            "additionalProperties": false,
+            "description": "Soci\u00e1lna pois\u0165ov\u0148a na Slovensku poskytuje r\u00f4zne d\u00e1vky, vr\u00e1tane nemocensk\u00fdch a d\u00f4chodkov\u00fdch d\u00e1vok.",
+            "properties": {
+                "Applicant": {
+                    "$ref": "#/$defs/ApplicantType",
+                    "description": "Inform\u00e1cie o \u017eiadate\u013eovy"
+                },
+                "Result": {
+                    "$ref": "#/$defs/ResultType",
+                    "description": "V\u00fdsledok po\u017eadovanej slu\u017eby, obsahuje d\u00e1ta \u0161pecifick\u00e9 tejto slu\u017ebe."
+                }
+            },
+            "title": "DP2",
+            "type": "object"
+        },
+        "DeliveryAddressType": {
+            "additionalProperties": false,
+            "description": "Zlo\u017een\u00fd d\u00e1tov\u00fd typ doru\u010dovacej adresy",
+            "properties": {
+                "PostalCode": {
+                    "description": "Po\u0161tov\u00e9 smerov\u00e9 \u010d\u00edslo",
+                    "type": "string"
+                }
+            },
+            "title": "DeliveryAddressType",
+            "type": "object"
+        },
+        "IDType": {
+            "additionalProperties": false,
+            "description": "Slo\u017een\u00fd d\u00e1tov\u00fd typ identifik\u00e1tora",
+            "properties": {
+                "IdentifierType": {
+                    "$ref": "#/$defs/IdentifierType",
+                    "description": "Zlo\u017een\u00fd d\u00e1tov\u00fd typ Typ identifik\u00e1tora"
+                },
+                "IdentifierValue": {
+                    "description": "Hodnota identifik\u00e1tora",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "IdentifierType",
+                "IdentifierValue"
+            ],
+            "title": "IDType",
+            "type": "object"
+        },
+        "IdentifierType": {
+            "additionalProperties": false,
+            "description": "Zlo\u017een\u00fd d\u00e1tov\u00fd typ Typ identifik\u00e1tora",
+            "properties": {
+                "Codelist": {
+                    "$ref": "#/$defs/Codelist",
+                    "description": "zlo\u017een\u00fd d\u00e1tov\u00fd typ \u010c\u00edseln\u00edkov\u00e1 hodnota"
+                },
+                "NonCodelistData": {
+                    "description": "ne\u010d\u00edseln\u00edkov\u00e1 hodnota, len v pr\u00edpade, ak nie je vyplnen\u00e1 \u010d\u00edseln\u00edkov\u00e1 hodnota",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "Codelist"
+            ],
+            "title": "IdentifierType",
+            "type": "object"
+        },
+        "Orphan": {
+            "additionalProperties": false,
+            "description": "Inform\u00e1cia o jednom die\u0165ati - sirote",
+            "properties": {
+                "amount": {
+                    "description": "Suma sirotsk\u00e9ho d\u00f4chodku v EUR",
+                    "type": "number"
+                },
+                "dateOfBirth": {
+                    "description": "D\u00e1tum narodenia",
+                    "format": "date",
+                    "type": "string"
+                },
+                "familyName": {
+                    "description": "Deden\u00e1 \u010das\u0165 mena osoby, ozna\u010dovan\u00e9 tie\u017e ako priezvisko",
+                    "type": "string"
+                },
+                "givenName": {
+                    "description": "Nededen\u00e1 \u010das\u0165 mena osoby, zv\u00e4\u010d\u0161a z\u00edskan\u00e9 pri naroden\u00ed",
+                    "type": "string"
+                }
+            },
+            "title": "Orphan",
+            "type": "object"
+        },
+        "Orphans": {
+            "additionalProperties": false,
+            "description": "zlo\u017een\u00fd d\u00e1tov\u00fd typ Orphans",
+            "properties": {
+                "Orphan": {
+                    "description": "zlo\u017een\u00fd d\u00e1tov\u00fd typ s opakovan\u00edm Orphan",
+                    "items": {
+                        "$ref": "#/$defs/Orphan"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "Orphans",
+            "type": "object"
+        },
+        "PensionBenefit": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "Orphans": {
+                    "$ref": "#/$defs/Orphans",
+                    "description": "Zoznam det\u00ed - sir\u00f4t, ak je poberate\u013eovi vypl\u00e1can\u00fd aj sirotsk\u00fd d\u00f4chodok det\u00ed (uv\u00e1dza sa iba pod sirotsk\u00fdm d\u00f4chodkom /benefitType: Dd/, ak nie je vypl\u00e1can\u00e1 samotnej sirote)"
+                },
+                "amount": {
+                    "description": "Suma d\u00f4chodkovej d\u00e1vky v EUR",
+                    "type": "number"
+                },
+                "benefitDesc": {
+                    "description": "N\u00e1zov / Popis druhu d\u00f4chodkovej d\u00e1vky",
+                    "type": "string"
+                },
+                "benefitType": {
+                    "description": "K\u00f3d ozna\u010denia druhu d\u00f4chodkovej d\u00e1vky (S, PS, I, V, Vd, D, Smin, Imin)",
+                    "type": "string"
+                },
+                "isMinAmount": {
+                    "description": "Inform\u00e1cia, \u010di je d\u00f4chodkov\u00e1 d\u00e1vka vypl\u00e1can\u00e1 vo v\u00fd\u0161ke minim\u00e1lneho d\u00f4chodku (iba pre benefitType: S, I)",
+                    "type": "string"
+                },
+                "isPaid": {
+                    "description": "Inform\u00e1cia, \u010di je d\u00f4chodkov\u00e1 d\u00e1vka vypl\u00e1can\u00e1 (0/1)",
+                    "type": "string"
+                },
+                "isPaidText": {
+                    "description": "Inform\u00e1cia, \u010di je d\u00f4chodkov\u00e1 d\u00e1vka vypl\u00e1can\u00e1 (\u00c1no/Nie)",
+                    "type": "string"
+                }
+            },
+            "title": "PensionBenefit",
+            "type": "object"
+        },
+        "PensionBenefitsInfo": {
+            "additionalProperties": false,
+            "description": "Inform\u00e1cie o vypl\u00e1can\u00ed d\u00f4chodkov\u00fdch d\u00e1vok - akt stav vypl\u00e1cania",
+            "properties": {
+                "PensionBenefit": {
+                    "description": "zlo\u017een\u00fd d\u00e1tov\u00fd typ s opakovan\u00edm - PensionBenefit",
+                    "items": {
+                        "$ref": "#/$defs/PensionBenefit"
+                    },
+                    "type": "array"
+                },
+                "totalAmount": {
+                    "description": "\u00dahrnn\u00e1 suma d\u00f4chodkov\u00fdch d\u00e1vok v EUR",
+                    "type": "number"
+                }
+            },
+            "title": "PensionBenefitsInfo",
+            "type": "object"
+        },
+        "PersonDataType": {
+            "additionalProperties": false,
+            "description": "Zlo\u017een\u00fd d\u00e1tov\u00fd typ \u00fadajov o osobe (fyzickej alebo pr\u00e1vnickej)",
+            "properties": {
+                "CorporateBody": {
+                    "$ref": "#/$defs/CorporateBodyType",
+                    "description": "\u00dadaje o pr\u00e1vnickej osobe"
+                },
+                "ID": {
+                    "$ref": "#/$defs/IDType",
+                    "description": "\u00dadaje o identifik\u00e1tore osoby"
+                },
+                "PhysicalAddress": {
+                    "$ref": "#/$defs/PhysicalAddressWithoutCountryType",
+                    "description": "\u00dadaje o adrese osoby"
+                },
+                "PhysicalPerson": {
+                    "$ref": "#/$defs/PhysicalPersonType",
+                    "description": "\u00dadaje o fyzickej osobe"
+                }
+            },
+            "title": "PersonDataType",
+            "type": "object"
+        },
+        "PersonNameType": {
+            "additionalProperties": false,
+            "description": "Zlo\u017een\u00fd d\u00e1tov\u00fd typ \u00fadajov o mene osoby",
+            "properties": {
+                "Affix": {
+                    "description": "Dodatok k menu, spravidla obsahuje tituly pred a za menom",
+                    "items": {
+                        "$ref": "#/$defs/AffixType"
+                    },
+                    "type": "array"
+                },
+                "FamilyName": {
+                    "description": "Deden\u00e1 \u010das\u0165 mena osoby, ozna\u010dovan\u00e9 tie\u017e ako priezvisko",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "FormattedName": {
+                    "description": "Naform\u00e1tovan\u00e9 cel\u00e9 meno osoby tak, ako by sa malo zobrazova\u0165 pou\u017e\u00edvate\u013eom",
+                    "type": "string"
+                },
+                "GivenName": {
+                    "description": "Nededen\u00e1 \u010das\u0165 mena osoby, zv\u00e4\u010d\u0161a z\u00edskan\u00e9 pri naroden\u00ed",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "PersonNameType",
+            "type": "object"
+        },
+        "PhysicalAddressWithoutCountryType": {
+            "additionalProperties": false,
+            "description": "Zlo\u017een\u00fd d\u00e1tov\u00fd prvok s \u00fadajmi fyzickej adresy bez inform\u00e1cie o krajine",
+            "properties": {
+                "AddressLine": {
+                    "description": "Form\u00e1tovan\u00e1 cel\u00e1 adresa v jedno riadku",
+                    "type": "string"
+                },
+                "BuildingNumber": {
+                    "description": "\u010c\u00edslo orienta\u010dn\u00e9",
+                    "type": "string"
+                },
+                "DeliveryAddress": {
+                    "$ref": "#/$defs/DeliveryAddressType",
+                    "description": "Doru\u010dovacia adresa"
+                },
+                "Municipality": {
+                    "description": "N\u00e1zov obce",
+                    "type": "string"
+                },
+                "PropertyRegistrationNumber": {
+                    "description": "\u010c\u00edslo s\u00fapisn\u00e9",
+                    "type": "string"
+                },
+                "StreetName": {
+                    "description": "N\u00e1zov ulice",
+                    "type": "string"
+                }
+            },
+            "title": "PhysicalAddressWithoutCountryType",
+            "type": "object"
+        },
+        "PhysicalPersonType": {
+            "additionalProperties": false,
+            "description": "Zlo\u017een\u00fd d\u00e1tov\u00fd typ \u00fadajov o fyzickej osobe",
+            "properties": {
+                "Birth": {
+                    "$ref": "#/$defs/BirthType",
+                    "description": "Inform\u00e1cie o naroden\u00e9 fyzickej osoby"
+                },
+                "PersonName": {
+                    "$ref": "#/$defs/PersonNameType",
+                    "description": "Inform\u00e1cie o mene fyzickej osoby"
+                }
+            },
+            "title": "PhysicalPersonType",
+            "type": "object"
+        },
+        "ResultType": {
+            "additionalProperties": false,
+            "description": "Zlo\u017een\u00fd d\u00e1tov\u00fd typ ResultType",
+            "properties": {
+                "AdditionalComments": {
+                    "$ref": "#/$defs/AdditionalComments",
+                    "description": "Dopl\u0148uj\u00face pozn\u00e1mky k potvrdeniu o vypl\u00e1can\u00fdch d\u00f4chodkv\u00fdch d\u00e1vkach"
+                },
+                "ConfirmationDate": {
+                    "description": "D\u00e1tum, ku ktor\u00e9mu bol zisten\u00fd stav poberania d\u00f4chodkov\u00fdch d\u00e1vok",
+                    "format": "date",
+                    "type": "string"
+                },
+                "PensionBenefitsInfo": {
+                    "$ref": "#/$defs/PensionBenefitsInfo",
+                    "description": "Inform\u00e1cie o vypl\u00e1can\u00ed d\u00f4chodkov\u00fdch d\u00e1vok - akt stav vypl\u00e1cania"
+                }
+            },
+            "title": "ResultType",
+            "type": "object"
+        }
+    },
+    "$id": "sp.dp2",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": true,
+    "description": "Soci\u00e1lna pois\u0165ov\u0148a na Slovensku poskytuje r\u00f4zne d\u00e1vky, vr\u00e1tane nemocensk\u00fdch a d\u00f4chodkov\u00fdch d\u00e1vok.",
+    "metamodel_version": "1.7.0",
+    "properties": {
+        "Applicant": {
+            "$ref": "#/$defs/ApplicantType",
+            "description": "Inform\u00e1cie o \u017eiadate\u013eovy"
+        },
+        "Result": {
+            "$ref": "#/$defs/ResultType",
+            "description": "V\u00fdsledok po\u017eadovanej slu\u017eby, obsahuje d\u00e1ta \u0161pecifick\u00e9 tejto slu\u017ebe."
+        }
+    },
+    "title": "DP2",
+    "type": "object",
+    "version": "1.0.0"
+}

@@ -1,0 +1,44 @@
+version: 1
+source: DataHub
+owners:
+  users:
+    - datahub
+nodes:
+  - name: Klasifikácia
+    description: Súbor výrazov na klasifikáciu údajov
+    terms:
+      - name: Citlivé
+        description: Citlivé údaje
+        custom_properties:
+          is_confidential: false
+      - name: Tajné
+        description: Tajné údaje
+        custom_properties:
+          is_confidential: true
+      - name: Prísne tajné
+        description: Prísne tajné údaje
+        custom_properties:
+          is_confidential: true
+  - name: Osobné údaje
+    description: Výrazy týkajúce sa osobných údajov osôb
+    terms:
+      - name: Meno
+        description: Rodné meno osoby, nededená časť celého mena fyzickej osoby
+        custom_properties:
+          ontology_term: https://data.gov.sk/def/ontology/physical-person/givenName
+      - name: Priezvisko
+        description: Obsahuje priezvisko osoby
+        custom_properties:
+          ontology_term: https://data.gov.sk/def/ontology/physical-person/familyName
+      - name: Email
+        description: Elektronická adresa osoby, označovaná zvyčajne ako email
+        custom_properties:
+          ontology_term: http://xmlns.com/foaf/0.1/mbox
+      - name: Titul pred menom
+        description: Časť celého mena pred samotným rodným menom a priezviskom, zvyčajne akademický titul
+        custom_properties:
+          ontology_term: https://data.gov.sk/def/ontology/physical-person/namePrefix
+      - name: Titul za menom
+        description: Časť celého mena zvyčajne za priezviskom, väčšinou akademický titul
+        custom_properties:
+          ontology_term: https://data.gov.sk/def/ontology/physical-person/nameSuffix

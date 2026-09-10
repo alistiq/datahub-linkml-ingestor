@@ -1,0 +1,39 @@
+[project]
+name = "datahub-linkml-ingestor"
+version = "0.1.0"
+description = "Convert XSD schemas to LinkML and ingest them into DataHub as dataset metadata"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+    "linkml>=1.7.0",
+    "linkml-runtime>=1.7.0",
+    "acryl-datahub>=0.13.0",
+    "pyyaml>=6.0",
+    "jsonasobj2>=1.0.4",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["main", "xsdToLinkml", "datahub_mcp_generator"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "LOG", "RUF"]
+ignore = [
+    "E501",     # illustrative DataHub field paths in comments exceed the limit
+    "SIM108",   # explicit if/else is clearer than a nested ternary here
+    "RUF012",   # valid_formats is a framework field from linkml's Generator base
+]

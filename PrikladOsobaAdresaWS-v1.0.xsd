@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic example web-service schema, modelled on the structure of a typical
+     Slovak public-administration query-by-identifier web service. Fictional
+     registry and namespace — not derived from, or a copy of, any real
+     government-registry schema. Used only as a worked example for the
+     XSD -> LinkML -> DataHub pipeline in this repo. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           targetNamespace="http://example.sk/priklad/PrikladOsobaAdresaWS-v1.0.xsd"
+           xmlns:msg="http://example.sk/priklad/PrikladOsobaAdresaWS-v1.0.xsd"
+           xmlns:owl="http://www.w3.org/2002/07/owl#"
+           xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+           xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+
+    <xs:annotation>
+        <xs:documentation>Poskytnutie osobnych a adresnych udajov osoby na zaklade identifikatora osoby (syntetický príklad).</xs:documentation>
+    </xs:annotation>
+
+    <xs:element name="TransEnvIn" type="msg:TransEnvInCType">
+        <xs:annotation>
+            <xs:documentation>Vstupne XML.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="TransEnvOut" type="msg:TransEnvOutCType">
+        <xs:annotation>
+            <xs:documentation>Vystupne XML.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="TransEnvInCType">
+        <xs:annotation>
+            <xs:documentation>Vstupne XML.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="TIDExternehoSystemu" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Identifikator transakcie v externom systeme, ktora iniciovala prislusnu transakciu.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ExternyPouzivatel" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Pouzivatel externeho systemu, ktory poslal poziadavku.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="IdentifikatorOsoby" type="xs:string" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Identifikator osoby, pre ktoru sa poziadavka podava.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="CorrID" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>Jednoznacny identifikator transakcie systemu poskytovatela.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="TransEnvOutCType">
+        <xs:annotation>
+            <xs:documentation>Vystupne XML.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="DatumaCasVytvoreniaVystupu" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>Datum a cas vytvorenia vystupu.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="NavratovyKod" type="xs:int">
+                <xs:annotation>
+                    <xs:documentation>Navratovy kod WS.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="FyzickaOsoba" type="msg:FyzickaOsobaCType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Osobne a adresne udaje osoby.</xs:documentation>
+                    <xs:appinfo>
+                        <owl:ObjectProperty ID="FyzickaOsoba">
+                            <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/physical-person/physicalPerson"/>
+                        </owl:ObjectProperty>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="CorrID" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="FyzickaOsobaCType">
+        <xs:annotation>
+            <xs:documentation>Osobne a adresne udaje fyzickej osoby.</xs:documentation>
+            <xs:appinfo>
+                <owl:Class ID="FyzickaOsobaCType">
+                    <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/physical-person/PhysicalPerson"/>
+                </owl:Class>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Identifikator" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Jednoznacny identifikator osoby v tomto systeme (nie rodne cislo).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Meno" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Krstne meno osoby.</xs:documentation>
+                    <xs:appinfo>
+                        <owl:DataProperty ID="Meno">
+                            <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/physical-person/givenName"/>
+                        </owl:DataProperty>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Priezvisko" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Priezvisko osoby.</xs:documentation>
+                    <xs:appinfo>
+                        <owl:DataProperty ID="Priezvisko">
+                            <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/physical-person/familyName"/>
+                        </owl:DataProperty>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DatumNarodenia" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Datum narodenia osoby.</xs:documentation>
+                    <xs:appinfo>
+                        <owl:DataProperty ID="DatumNarodenia">
+                            <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/physical-person/dateOfBirth"/>
+                        </owl:DataProperty>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Adresa" type="msg:AdresaCType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Adresa pobytu osoby.</xs:documentation>
+                    <xs:appinfo>
+                        <owl:ObjectProperty ID="Adresa">
+                            <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/physical-person/residenceAddress"/>
+                        </owl:ObjectProperty>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AdresaCType">
+        <xs:annotation>
+            <xs:documentation>Postova adresa.</xs:documentation>
+            <xs:appinfo>
+                <owl:Class ID="AdresaCType">
+                    <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/location/PhysicalAddress"/>
+                </owl:Class>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Ulica" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Nazov ulice.</xs:documentation>
+                    <xs:appinfo>
+                        <owl:DataProperty ID="Ulica">
+                            <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/location/street"/>
+                        </owl:DataProperty>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="OrientacneCislo" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Orientacne / supisne cislo budovy.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Obec" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Nazov obce.</xs:documentation>
+                    <xs:appinfo>
+                        <owl:DataProperty ID="Obec">
+                            <skos:closeMatch rdf:resource="https://data.gov.sk/def/ontology/location/lau2"/>
+                        </owl:DataProperty>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="PSC" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Poštové smerovacie cislo.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Stat" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Nazov statu.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

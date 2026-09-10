@@ -1,0 +1,385 @@
+id: sp
+name: SocialnaPoistovna
+title: Štandardné triedy a vlastnosti datasetov Sociálnej poisťovne
+version: 1.0.0
+
+description: Všeobecne používané triedy a vlastnosti skrz datasety Sociálnej poisťovne
+
+default_range: string
+imports:
+  - linkml:types
+
+classes:
+  ApplicantType:
+    description: Zložený dátový prvok ApplicantType
+    attributes:
+      PersonData:
+        description: Osobné údaje žiadateľa
+        range: PersonDataType
+
+  PersonDataType:
+    description: Zložený dátový typ údajov o osobe (fyzickej alebo právnickej)
+    attributes:
+      PhysicalPerson:
+        description: Údaje o fyzickej osobe
+        range: PhysicalPersonType
+      CorporateBody:
+        description: Údaje o právnickej osobe
+        range: CorporateBodyType
+      PhysicalAddress:
+        description: Údaje o adrese osoby
+        range: PhysicalAddressWithoutCountryType
+      ID:
+        description: Údaje o identifikátore osoby
+        range: IDType
+  
+  IDType:
+    description: Složený dátový typ identifikátora
+    attributes:
+      IdentifierType:
+        description: Zložený dátový typ Typ identifikátora
+        range: IdentifierType
+        required: true
+      IdentifierValue:
+        description: Hodnota identifikátora
+        range: string
+        required: true
+
+  IdentifierType:
+    description: Zložený dátový typ Typ identifikátora
+    mixins:
+      - IsCodelist
+
+  ## Physical person ##
+
+  PhysicalPersonType:
+    description: Zložený dátový typ údajov o fyzickej osobe
+    attributes:
+      PersonName:
+        description: Informácie o mene fyzickej osoby
+        range: PersonNameType
+      Birth:
+        description: Informácie o narodené fyzickej osoby
+        range: BirthType
+
+  PersonNameType:
+    description: Zložený dátový typ údajov o mene osoby
+    attributes:
+      GivenName:
+        description: Nededená časť mena osoby, zväčša získané pri narodení
+        range: string
+        multivalued: true
+      FamilyName:
+        description: Dedená časť mena osoby, označované tiež ako priezvisko
+        range: string
+        multivalued: true
+      Affix:
+        description: Dodatok k menu, spravidla obsahuje tituly pred a za menom
+        range: AffixType
+        multivalued: true
+      FormattedName:
+        description: Naformátované celé meno osoby tak, ako by sa malo zobrazovať používateľom
+        range: string
+
+  AffixType:
+    description: Dodatok k menu, spravidla obsahuje tituly pred a za menom
+    mixins:
+      - IsCodelist
+    attributes:
+      type:
+        description: typ dodatku, pred alebo za menom
+        range: string
+        keywords:
+          - attribute
+      position:
+        description: pozícia vrámci ostatných dodatkov
+        range: string
+        keywords:
+          - attribute
+  
+  BirthType:
+    description: Zložený dátovy typ údajov o narodené osoby
+    attributes:
+      DateOfBirth:
+        description: Dátum narodenia
+        range: date
+
+  
+  ## Legal person, corporate info ##
+
+  CorporateBodyType:
+    description: Zložený dátový typ údajov o právnickej osobe
+    attributes:
+      CorporateBodyFullName:
+        description: Plný názov právnickej osoby
+        range: string
+
+  
+  ## Address ##
+
+  PhysicalAddressWithoutCountryType:
+    description: Zložený dátový prvok s údajmi fyzickej adresy bez informácie o krajine
+    attributes:
+      Municipality:
+        description: Názov obce
+        range: string
+      StreetName:
+        description: Názov ulice
+        range: string
+      BuildingNumber:
+        description: Číslo orientačné
+        range: string
+      PropertyRegistrationNumber:
+        description: Číslo súpisné
+        range: string
+      DeliveryAddress:
+        description: Doručovacia adresa
+        range: DeliveryAddressType
+      AddressLine:
+        description: Formátovaná celá adresa v jedno riadku
+        range: string
+
+  DeliveryAddressType:
+    description: Zložený dátový typ doručovacej adresy
+    attributes:
+      PostalCode:
+        description: Poštové smerové číslo
+        range: string
+
+
+  ## Other ##
+
+  Codelist:
+    description: Zložený dátový typ pre hodnoty z číselníka
+    attributes:
+      CodelistCode:
+        description: Kódové označenie číselníka
+        range: string
+        required: true
+      CodelistItem:
+        description: Položka z číselníka
+        range: CodelistItem
+        required: true
+
+  CodelistItem:
+    description: Zložený dátový typ pre konkrétnu hodnotu z číselníka
+    attributes:
+      ItemCode:
+        description: kód položky
+        range: string
+        required: true
+      ItemName:
+        description: názov položky
+        range: string
+        required: true
+
+  AdditionalComments:
+    description: Doplňujúce poznámky k potvrdeniu o vyplácaných dôchodkvých dávkach
+    attributes:
+      Comment:
+        description: Poznámka (riadok / odsek)
+        range: string
+        multivalued: true
+
+
+
+  #DP3-DP4
+  PensionBenefitsInfo:
+    description: Informácie o vyplácaní dôchodkových dávok - akt stav vyplácania
+    mixins:
+      - HasMinAmounts
+    attributes:
+      yyyymmFrom:
+        description: Rok a mesiac zač. obdobia potvrdenia YYYYMM
+        range: string # YearMonth
+        pattern: "^(\\d{4})(\\d{2})$"
+        keywords:
+          - attribute
+      yyyymmTo:
+        description: Rok a mesiac konca obdobia potvrdenia YYYYMM
+        range: string  # YearMonth
+        pattern: "^(\\d{4})(\\d{2})$"
+        keywords:
+          - attribute
+      totalAmountI:
+        description: Úhrnná suma invalidného (I) dôchodku v EUR
+        range: float
+        keywords:
+          - attribute
+      totalAmountS:
+        description: Úhrnná suma starobného (S) dôchodku v EUR
+        range: float
+        keywords:
+          - attribute
+      totalAmountPS:
+        description: Úhrnná suma predčasného starobného (PS) dôchodku v EUR
+        range: float
+        keywords:
+          - attribute
+      totalAmountV : 
+        description: Úhrnná suma vdovského (V) dôchodku v EUR
+        range: float
+        keywords:
+          - attribute
+      totalAmountVd : 
+        description: Úhrnná suma vdoveckého (Vd) dôchodku v EUR
+        range: float
+        keywords:
+          - attribute   
+      totalAmountD : 
+        description: 	Úhrnná suma sirotského (D) dôchodku v EUR 
+        range: float
+        keywords:
+          - attribute 
+      totalAmountVR : 
+        description: Úhrnná suma vyrovnávacieho príplatku (VR) v EUR
+        range: float
+        keywords:
+          - attribute 
+      totalAmountBZ : 
+        description: Úhrnná suma zvýšenia pre bezvládnosť dôchodcu (BZ) v EUR
+        range: float
+        keywords:
+          - attribute 
+      totalAmountK : 
+        description: Úhrnná suma úrazového dôchodku (K) v EUR
+        range: float
+        keywords:
+          - attribute 
+      totalAmountM : 
+        description: Úhrnná suma dôchodku manželky (M) v EUR	
+        range: float
+        keywords:
+          - attribute 
+      totalAmountP : 
+        description: Úhrnná suma sociálneho dôchodku (P) v EUR
+        range: float
+        keywords:
+            - attribute
+      totalAmountVr : 
+        description: Úhrnná suma dôchodku za výsluhu rokov (Vr) v EUR
+        range: float
+        keywords:
+          - attribute
+      
+      PensionBenefitsItem:
+        description: rozpis dôchodkov po obdobiach
+        range: PensionBenefitsItem
+        multivalued: true
+        required: true
+
+  PensionBenefitsItem:
+      description: zložený dátový typ PensionBenefitsItem 
+      mixins:
+        - HasMinAmounts
+      attributes:
+        dateFrom:
+          description: Dátum od (ak ide o obdobie doplatku)
+          range: date 
+          keywords:
+            - attribute
+        dateTo:
+          description: Dátum do (ak ide o obdobie doplatku)
+          range: date 
+          keywords:
+            - attribute
+        yyyymm:
+          description: Rok a mesiac výplaty dôchodkovej dávky YYYYMM (ak ide o celomesačné obdobie)	
+          range: string # YearMonth
+          pattern: "^(\\d{4})(\\d{2})$"
+          keywords:
+            - attribute
+        amountI:
+          description: Suma invalidného (I) dôchodku v EUR
+          range: float 
+          keywords:
+            - attribute
+        amountS:
+          description: Suma starobného (S) dôchodku v EUR
+          range: float
+          keywords:
+            - attribute
+        amountPS:
+          description: Suma predčasného starobného (PS) dôchodku v EUR
+          range: float
+          keywords:
+            - attribute
+        amountV:
+          description: Suma vdovského (V) dôchodku v EUR	
+          range: float
+          keywords:
+            - attribute
+        amountVd:
+          description: Suma vdoveckého (Vd) dôchodku v EUR	
+          range: float
+          keywords:
+            - attribute
+        amountD:
+          description: Suma sirotského (D) dôchodku v EUR	
+          range: float
+          keywords:
+            - attribute  
+        amountVR:
+          description: Suma vyrovnávacieho príplatku (VR) v EUR	
+          range: float
+          keywords:
+            - attribute  
+        amountBZ:
+          description: Suma zvýšenia pre bezvládnosť dôchodcu (BZ) v EUR
+          range: float
+          keywords:
+            - attribute  
+        amountK:
+          description: Suma úrazového dôchodku (K) v EUR
+          range: float
+          keywords:
+            - attribute
+        amountM:
+          description: Suma dôchodku manželky (M) v EUR
+          range: float
+          keywords:
+            - attribute
+        amountP:
+          description: Suma sociálneho dôchodku (P) v EUR
+          range: float
+          keywords:
+            - attribute
+        amountVr:
+          description: Suma dôchodku za výsluhu rokov (Vr) v EUR
+          range: float
+          keywords:
+            - attribute
+
+  ## Mixins
+
+  IsCodelist:
+    mixin: true
+    slots:
+      - Codelist
+      - NonCodelistData
+
+  HasMinAmounts:
+    mixin: true
+    slots:
+      - isMinAmountS
+      - isMinAmountI
+
+## Slots
+slots:
+  Codelist:
+    description: zložený dátový typ Číselníková hodnota
+    range: Codelist
+    required: true
+  NonCodelistData:
+    description: nečíselníková hodnota, len v prípade, ak nie je vyplnená číselníková hodnota
+    range: string
+  isMinAmountS: 
+    description: Informácia, či je (S) vyplácaný vo výške minimálneho dôchodku
+    range: boolean
+    keywords:
+      - attribute
+  isMinAmountI: 
+    description: Informácia, či je (I) vyplácaný vo výške minimálneho dôchodku
+    range: boolean
+    keywords:
+      - attribute

@@ -1,0 +1,25 @@
+id: https://example.org/schemas/sample
+name: sample
+title: Sample schema
+description: A tiny schema for testing DatahubMCPGenerator
+
+default_range: string
+imports:
+  - linkml:types
+
+annotations:
+  sk.gov.dataManagement.source.name: TestSource
+
+classes:
+  Person:
+    tree_root: true
+    description: A person
+    attributes:
+      firstName:
+        range: string
+        required: true
+        exact_mappings:
+          - https://example.org/ontology/firstName
+      nicknames:
+        range: string
+        multivalued: true

@@ -1,0 +1,33 @@
+id: sp
+name: SocialnaPoistovna
+title: Štandardné triedy a vlastnosti datasetov Sociálnej poisťovne
+version: 1.0.0
+
+description: Triedy a vlastnosti používané skrz datasety DP1 a DP2 Sociálnej poisťovne
+
+default_range: string
+imports:
+  - linkml:types
+
+
+classes:
+    ## Physical person ##
+
+  PersonNameType: 
+    description: Zložený dátový typ údajov o mene osoby
+    attributes:
+      GivenName:
+        description: Nededená časť mena osoby, zväčša získané pri narodení
+        range: string
+        multivalued: true 
+      FamilyName:
+        description: Dedená časť mena osoby, označované tiež ako priezvisko
+        range: string
+        multivalued: true 
+      Affix:
+        description: Dodatok k menu, spravidla obsahuje tituly pred a za menom
+        range: AffixType
+        multivalued: true
+      FormattedName:
+        description: Naformátované celé meno osoby tak, ako by sa malo zobrazovať používateľom
+        range: string

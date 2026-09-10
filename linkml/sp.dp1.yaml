@@ -1,0 +1,137 @@
+id: sp.dp1
+name: DP1
+title: Poskytnutie údajov o výplate dôchodkových dávok SP bez sumy (DP1)
+version: 1.0.0
+
+description: |
+  Sociálna poisťovňa na Slovensku poskytuje rôzne dávky, vrátane **nemocenských** a **dôchodkových** dávok. Tu je stručný prehľad o týchto dvoch druhoch dávok:
+  1. **Nemocenské dávky**: Nemocenské dávky sú poskytované poistencovi, ktorý je pracovne neschopný v dôsledku ochorenia alebo úrazu. Poistenci majú nárok na nemocenské dávky počas doby lekárskej práceneschopnosti, ktorú určí lekár. Výška nemocenskej dávky je určená na základe príjmu poistenca v predchádzajúcom období. Nemocenské dávky sú vyplácané prostredníctvom Sociálnej poisťovne.
+  2. **Dôchodkové dávky**: Sociálna poisťovňa poskytuje rôzne typy dôchodkových dávok, ktoré slúžia na zabezpečenie príjmu poistencov po dosiahnutí dôchodkového veku, pri invalidite alebo pri stratových udalostiach. Medzi najčastejšie typy dôchodkových dávok patria starobný dôchodok, invalidný dôchodok, vdovský dôchodok, vdovecký dôchodok, sirotský dôchodok a dôchodok pre výsluhu. Výška dôchodkových dávok závisí od príspevkov zaplatených do sociálneho poistenia a ďalších faktorov stanovených zákonom.
+
+  V prípade nároku na nemocenské alebo dôchodkové dávky je potrebné kontaktovať Sociálnu poisťovňu a podať príslušnú žiadosť. Je dôležité splniť určité podmienky a predložiť potrebnú dokumentáciu pre overenie nároku na dávky.
+
+  Podrobné informácie o nemocenských a dôchodkových dávkach Sociálnej poisťovne, vrátane aktuálnych pravidiel, výpočtov a postupov, sú k dispozícii na webových stránkach Sociálnej poisťovne alebo prostredníctvom ich kontaktného centra.
+
+annotations:
+  sk.gov.dataManagement.source.name: Sociálna poisťovňa
+  sk.gov.dataManagement.intendedPerson: Physical person, Legal person 
+  sk.gov.dataManagement.isvs.name: SES - System elektronickych sluzieb (IS SP)
+  sk.gov.dataManagement.isvs.code: isvs_551
+  sk.gov.dataManagement.csru.availability: "YES"
+  sk.gov.dataManagement.format: XML #XSD
+  sk.gov.dataManagement.integration.availability: "YES"
+  sk.gov.dataManagement.integration.name: "Údaje o výplate DD SP bez sumy typ DP_1 - Poskytnutie údajov o výplate dôchodkových dávok SP bez sumy"
+  sk.gov.dataManagement.legislation: Zákon č. 461/2003 Z. z. o sociálnom poistení
+  sk.gov.dataManagement.edoc.availability: "NO"
+  sk.gov.dataManagement.ontology.availability: "YES"
+  sk.gov.dataManagement.usecase:
+  sk.gov.dataManagement.quality.level: "1"
+
+default_range: string
+imports:
+  - linkml:types
+  - sp
+  - sp_dp
+  - sp_dp1-2
+
+## Kardinalita sa vytvorí pri importe kombináciou vlastností "required" a "mutlivalued" nasledovne:
+## 1..* - slot je required a multivalued
+## 1..1 - slot je required ale nie multivalued
+## 0..* - slot nie je required ale je multivalued
+## 0..1 - slot nie je required a nie je multivalued
+##
+## ak nie je uvedené, default je false (nie je)
+
+classes:
+  DP1:
+    description: Sociálna poisťovňa na Slovensku poskytuje rôzne dávky, vrátane nemocenských a dôchodkových dávok.
+    tree_root: true
+    attributes:
+      Applicant:
+        description: Informácie o žiadateľovy
+        range: ApplicantType
+      Result:
+        description: Výsledok požadovanej služby, obsahuje dáta špecifické tejto službe.
+        range: ResultType
+  
+  ResultType:
+    description: Zložený dátový typ ResultType
+    attributes:
+      ConfirmationDate:
+        description: Dátum, ku ktorému bol zistený stav poberania dôchodkových dávok
+        range: date
+      PensionBenefitsInfo:
+        description: Informácie o vyplácaní dôchodkových dávok - akt stav vyplácania
+        range: PensionBenefitsInfo
+      AdditionalComments:
+        description: Doplňujúce poznámky k potvrdeniu o vyplácaných dôchodkvých dávkach
+        range: AdditionalComments
+
+  PensionBenefitsInfo:
+    description: Informácie o vyplácaní dôchodkových dávok - akt stav vyplácania
+    attributes:
+      PensionBenefit:
+        description: zložený dátový typ s opakovaním - PensionBenefit
+        range: PensionBenefit
+        multivalued: true
+
+  PensionBenefit:
+    description: zložený dátový typ  PensionBenefit  
+    attributes:
+      benefitType:
+        description: Kód označenia druhu dôchodkovej dávky (S, PS, I, V, Vd, D, Smin, Imin)
+        range: string
+        keywords:
+          - attribute
+      benefitDesc:
+        description: Názov / Popis druhu dôchodkovej dávky
+        range: string
+        keywords:
+          - attribute
+      isPaid:
+        description: Informácia, či je dôchodková dávka vyplácaná (0/1)
+        range: string
+        keywords:
+          - attribute
+      isPaidText:
+        description: Informácia, či je dôchodková dávka vyplácaná (Áno/Nie)
+        range: string
+        keywords:
+          - attribute
+      isMinAmount:
+        description: "Informácia, či je dôchodková dávka vyplácaná vo výške minimálneho dôchodku (iba pre benefitType: S, I)"
+        range: string
+        keywords:
+          - attribute
+      Orphans:
+        description: "Zoznam detí - sirôt, ak je poberateľovi vyplácaný aj sirotský dôchodok detí (uvádza sa iba pod sirotským dôchodkom /benefitType: Dd/, ak nie je vyplácaná samotnej sirote)"
+        range: Orphans
+
+  Orphan:
+    description: Informácia o jednom dieťati - sirote
+    attributes:
+      givenName:
+        description: Nededená časť mena osoby, zväčša získané pri narodení
+        range: string
+        keywords:
+          - attribute
+      familyName:
+        description:  Dedená časť mena osoby, označované tiež ako priezvisko
+        range: string
+        keywords:
+          - attribute
+      dateOfBirth:
+        description: Dátum narodenia
+        range: date
+        keywords:
+          - attribute
+      
+  Orphans:
+    description: zložený dátový typ Orphans
+    attributes:
+      Orphan:
+        description: zložený dátový typ s opakovaním Orphan
+        multivalued: true
+        range: Orphan
+
+

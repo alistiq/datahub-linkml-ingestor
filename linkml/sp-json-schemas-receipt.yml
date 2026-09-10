@@ -1,0 +1,8 @@
+pipeline_name: json_schema_ingestion
+source:
+  type: json-schema
+  config:
+    path: sp.dp2.schema.json
+    platform: CSRU
+    stateful_ingestion:
+      enabled: true

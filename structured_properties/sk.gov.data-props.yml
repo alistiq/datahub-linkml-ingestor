@@ -1,0 +1,174 @@
+- id: sk.gov.dataManagement.cardinality
+  type: string
+  display_name: Cardinality
+  entity_types:
+    - schemaField
+  description: "Refers to the total allowed number of elements present in a set."
+  allowed_values:
+    - value: "0..1"
+      description: Zero or one element is allowed, making this field optional
+    - value: "1..1"
+      description: Exactly one element is allowed, making this field mandatory
+    - value: "0..N"
+      description: Zero or more elements is allowed
+    - value: "1..N"
+      description: One or more elements is allowed
+- id: sk.gov.dataManagement.codelist
+  type: string
+  display_name: Codelist
+  description: "Basic national codelist identifier, if non-empty, field can only contain values from this codelist."
+  entity_types:
+    - schemaField
+- id: sk.gov.dataManagement.length.min
+  type: number
+  display_name: Minimal length
+  description: "Minimal length constraint for strings"
+  entity_types:
+    - schemaField
+- id: sk.gov.dataManagement.length.max
+  type: number
+  display_name: Maximal length
+  description: "Maximal length constraint for strings"
+  entity_types:
+    - schemaField
+- id: skos.closeMatch
+  type: string
+  display_name: Has close match
+  description: "Is used to link two concepts that are sufficiently similar that they can be used interchangeably in some information retrieval applications. In order to avoid the possibility of 'compound errors' when combining mappings across more than two concept schemes, skos:closeMatch is not declared to be a transitive property."
+  entity_types:
+    - schemaField
+- id: skos.exactMatch
+  type: string
+  display_name: Has exact match
+  description: "Is used to link two concepts, indicating a high degree of confidence that the concepts can be used interchangeably across a wide range of information retrieval applications. skos:exactMatch is a transitive property, and is a sub-property of skos:closeMatch."
+  entity_types:
+    - schemaField
+
+- id: sk.gov.dataManagement.intendedPerson
+  type: string
+  display_name: Intended for
+  entity_types:
+    - dataset
+  description: "The type of person for whom the dataset is intended"
+  cardinality: MULTIPLE
+  allowed_values:
+    - value: Physical person
+      description: Dataset is available for Physical person
+    - value: Legal person
+      description: Dataset is available for Legal person
+    - value: Self employed person
+      description: Dataset is available for Self employed physical person
+- id: sk.gov.dataManagement.isvs.code
+  type: string
+  display_name: Source ISVS code
+  entity_types:
+    - dataset
+  description: "Code notation of the source ISVS"
+- id: sk.gov.dataManagement.isvs.name
+  type: string
+  display_name: Source ISVS name
+  entity_types:
+    - dataset
+  description: "Human readable name of the source ISVS"
+- id: sk.gov.dataManagement.source.name
+  type: string
+  display_name: Source of data (OVM)
+  entity_types:
+    - dataset
+  description: "Name of the institution that is the source / origin of the data"
+- id: sk.gov.dataManagement.csru.availability
+  type: string
+  display_name: Available via CSRU
+  entity_types:
+    - dataset
+  description: "If this dataset is available via CSRU information system"
+  allowed_values:
+    - value: "YES"
+      description: Dataset is available via CSRU
+    - value: "NO"
+      description: Dataset is not available via CSRU
+- id: sk.gov.dataManagement.format
+  type: string
+  display_name: Available data formats
+  entity_types:
+    - dataset
+  description: "All available data formats for this dataset"
+  cardinality: MULTIPLE
+  allowed_values:
+    - value: XML
+      description: Dataset is available in XML format
+    - value: JSON
+      description: Dataset is available in JSON
+    - value: JSON-LD
+      description: Dataset is available in JSON Linked Data format (RDF)
+    - value: CSV
+      description: Dataset is available as comma separated values (CSV)
+- id: sk.gov.dataManagement.integration.availability
+  type: string
+  display_name: Has integration
+  entity_types:
+    - dataset
+  description: "Integration point in terms of Integration manual for IS CSRU"
+  allowed_values:
+    - value: "YES"
+      description: Integration available
+    - value: IN PROGRESS
+      description: Integration is being implemented
+    - value: "NO"
+      description: Integration is not available
+- id: sk.gov.dataManagement.integration.name
+  type: string
+  display_name: Integrations
+  entity_types:
+    - dataset
+  description: "Existing integration name(s)"
+  cardinality: MULTIPLE
+- id: sk.gov.dataManagement.legislation
+  type: string
+  display_name: Related legislation
+  entity_types:
+    - dataset
+  description: "All related laws, regulations etc."
+  cardinality: MULTIPLE
+- id: sk.gov.dataManagement.edoc.availability
+  type: string
+  display_name: e-ID available
+  entity_types:
+    - dataset
+  description: "If attributes from dataset are suitable / available for electronic documents (e.g. EDIW)"
+  allowed_values:
+    - value: "YES"
+      description: Dataset is suitable or the e-document already exists
+    - value: "NO"
+      description: Dataset is not suitable / available for e-document
+- id: sk.gov.dataManagement.ontology.availability
+  type: string
+  display_name: Ontology available
+  entity_types:
+    - dataset
+  description: "Wheter this dataset and its attributes has an RDF representation using well known and national ontologies"
+  allowed_values:
+    - value: "YES"
+      description: Dataset is available in RDF formats
+    - value: "NO"
+      description: Dataset is not available in RDF formats
+- id: sk.gov.dataManagement.usecase
+  type: string
+  display_name: Usecases
+  entity_types:
+    - dataset
+  description: "Examples of suitable usecases"
+  cardinality: MULTIPLE
+- id: sk.gov.dataManagement.quality.level
+  type: string
+  display_name: Quality level
+  entity_types:
+    - dataset
+  description: "State or quality of the dataset related to CSRU"
+  allowed_values:
+    - value: 1
+      description: Dataset is ready
+    - value: 2
+      description: Preparation in progress
+    - value: 3
+      description: Not implemented

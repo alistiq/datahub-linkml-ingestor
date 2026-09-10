@@ -1,0 +1,147 @@
+id: sp
+name: SocialnaPoistovna
+title: Štandardné triedy a vlastnosti datasetov Sociálnej poisťovne
+version: 1.0.0
+
+description: Všeobecne používané triedy a vlastnosti skrz DP datasety Sociálnej poisťovne
+
+default_range: string
+imports:
+  - linkml:types
+
+
+classes:
+  ApplicantType: # dp1,dp3, dp4
+    description: Zložený dátový prvok ApplicantType
+    attributes:
+      PersonData:
+        description: Osobné údaje žiadateľa
+        range: PersonDataType
+
+  ## Physical person ##
+  PersonDataType: # dp1, dp2 , dp3 , dp4
+    description: Zložený dátový typ údajov o osobe (fyzickej alebo právnickej)
+    attributes:
+      PhysicalPerson: 
+        description: Údaje o fyzickej osobe
+        range: PhysicalPersonType
+      CorporateBody: 
+        description: Údaje o právnickej osobe
+        range: CorporateBodyType
+      PhysicalAddress: 
+        description: Údaje o adrese osoby
+        range: PhysicalAddressWithoutCountryType
+      ID: 
+        description: Údaje o identifikátore osoby
+        range: IDType
+  
+  PhysicalPersonType: #dp1, dp3, dp4
+    description: Zložený dátový typ údajov o fyzickej osobe
+    attributes:
+      PersonName:
+        description: Informácie o mene fyzickej osoby
+        range: PersonNameType
+      Birth:
+        description: Informácie o narodené fyzickej osoby
+        range: BirthType
+
+  BirthType: #dp1,dp3, dp4
+    description: Zložený dátovy typ údajov o narodené osoby
+    attributes:
+      DateOfBirth:
+        description: Dátum narodenia
+        range: date # v dp2 kardinalita P, dp1 -> 1..1 
+        required: true
+
+
+  AffixType:  #dp1,dp3, dp4, 
+    description: Dodatok k menu, spravidla obsahuje tituly pred a za menom
+    mixins:
+      - IsCodelist 
+    attributes: 
+      type: 
+        description: typ dodatku, pred alebo za menom
+        range: string
+        keywords:
+          - attribute
+      position: 
+        description: pozícia vrámci ostatných dodatkov
+        range: string
+        keywords:
+          - attribute
+
+
+
+  ## Address ##
+
+  PhysicalAddressWithoutCountryType: #dp1, dp3, dp4
+    description: Zložený dátový prvok s údajmi fyzickej adresy bez informácie o krajine
+    attributes:
+      Municipality:
+        description: Názov obce
+        range: string
+      StreetName:
+        description: Názov ulice
+        range: string
+      BuildingNumber:
+        description: Číslo orientačné
+        range: string
+      PropertyRegistrationNumber:
+        description: Číslo súpisné
+        range: string
+      DeliveryAddress:
+        description: Doručovacia adresa
+        range: DeliveryAddressType
+      AddressLine:
+        description: Formátovaná celá adresa v jedno riadku
+        range: string
+
+  DeliveryAddressType: # dp1, dp3 , dp4
+    description: Zložený dátový typ doručovacej adresy
+    attributes:
+      PostalCode:
+        description: Poštové smerové číslo
+        range: string
+
+  ## Other ##
+
+  Codelist: #dp1, dp3, dp4
+    description: Zložený dátový typ pre hodnoty z číselníka
+    attributes:
+      CodelistCode:
+        description: Kódové označenie číselníka
+        range: string
+        required: true
+      CodelistItem:
+        description: Položka z číselníka
+        range: CodelistItem
+        required: true
+
+  CodelistItem: #dp1,dp3, dp4
+    description: Zložený dátový typ pre konkrétnu hodnotu z číselníka
+    attributes:
+      ItemCode:
+        description: kód položky
+        range: string
+        required: true
+      ItemName:
+        description: názov položky
+        range: string
+        required: true
+
+  AdditionalComments: #dp1,dp3, dp4
+    description: Doplňujúce poznámky k potvrdeniu o vyplácaných dôchodkvých dávkach
+    attributes:
+      Comment:
+        description: Poznámka (riadok / odsek)
+        range: string
+        multivalued: true
+
+  ## Legal person, corporate info ##
+
+  CorporateBodyType: 
+    description: Zložený dátový typ údajov o právnickej osobe
+    attributes:
+      CorporateBodyFullName:
+        description: Plný názov právnickej osoby
+        range: string

@@ -1,0 +1,119 @@
+id: priklad.osobaadresa1
+name: PrikladOsobaAdresaWS
+title: Poskytnutie osobných a adresných údajov osoby na základe identifikátora osoby (syntetický príklad)
+version: 1.0.0
+
+description: |
+  Syntetická ukážková web-service schéma (fiktívny register, nie odvodená od
+  žiadneho reálneho vládneho registra), použitá ako pracovný príklad pre
+  pipeline XSD -> LinkML -> DataHub v tomto repozitári.
+
+default_range: string
+imports:
+  - linkml:types
+
+classes:
+  PrikladOsobaAdresaWS:
+    description: Poskytnutie osobnych a adresnych udajov osoby na zaklade identifikatora
+      osoby (syntetický príklad).
+    tree_root: true
+    attributes:
+      TransEnvIn:
+        description: Vstupne XML.
+        range: TransEnvInCType
+      TransEnvOut:
+        description: Vystupne XML.
+        range: TransEnvOutCType
+  TransEnvInCType:
+    description: Vstupne XML.
+    attributes:
+      TIDExternehoSystemu:
+        description: Identifikator transakcie v externom systeme, ktora iniciovala
+          prislusnu transakciu.
+        range: string
+      ExternyPouzivatel:
+        description: Pouzivatel externeho systemu, ktory poslal poziadavku.
+        range: string
+      IdentifikatorOsoby:
+        description: Identifikator osoby, pre ktoru sa poziadavka podava.
+        range: string
+        multivalued: true
+      CorrID:
+        description: Jednoznacny identifikator transakcie systemu poskytovatela.
+        range: string
+        required: false
+        keywords:
+        - attribute
+  TransEnvOutCType:
+    description: Vystupne XML.
+    attributes:
+      DatumaCasVytvoreniaVystupu:
+        description: Datum a cas vytvorenia vystupu.
+        range: dateTime
+      NavratovyKod:
+        description: Navratovy kod WS.
+        range: int
+      FyzickaOsoba:
+        description: Osobne a adresne udaje osoby.
+        range: FyzickaOsobaCType
+        close_mappings:
+        - https://data.gov.sk/def/ontology/physical-person/physicalPerson
+        multivalued: true
+      CorrID:
+        range: string
+        required: false
+        keywords:
+        - attribute
+  FyzickaOsobaCType:
+    description: Osobne a adresne udaje fyzickej osoby.
+    close_mappings:
+    - https://data.gov.sk/def/ontology/physical-person/PhysicalPerson
+    attributes:
+      Identifikator:
+        description: Jednoznacny identifikator osoby v tomto systeme (nie rodne cislo).
+        range: string
+      Meno:
+        description: Krstne meno osoby.
+        range: string
+        close_mappings:
+        - https://data.gov.sk/def/ontology/physical-person/givenName
+      Priezvisko:
+        description: Priezvisko osoby.
+        range: string
+        close_mappings:
+        - https://data.gov.sk/def/ontology/physical-person/familyName
+      DatumNarodenia:
+        description: Datum narodenia osoby.
+        range: date
+        close_mappings:
+        - https://data.gov.sk/def/ontology/physical-person/dateOfBirth
+      Adresa:
+        description: Adresa pobytu osoby.
+        range: AdresaCType
+        close_mappings:
+        - https://data.gov.sk/def/ontology/physical-person/residenceAddress
+  AdresaCType:
+    description: Postova adresa.
+    close_mappings:
+    - https://data.gov.sk/def/ontology/location/PhysicalAddress
+    attributes:
+      Ulica:
+        description: Nazov ulice.
+        range: string
+        close_mappings:
+        - https://data.gov.sk/def/ontology/location/street
+      OrientacneCislo:
+        description: Orientacne / supisne cislo budovy.
+        range: string
+      Obec:
+        description: Nazov obce.
+        range: string
+        close_mappings:
+        - https://data.gov.sk/def/ontology/location/lau2
+      PSC:
+        description: Poštové smerovacie cislo.
+        range: string
+      Stat:
+        description: Nazov statu.
+        range: string
+types: {}
